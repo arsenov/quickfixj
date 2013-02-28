@@ -1,0 +1,43 @@
+package quickfix.abfx;
+
+/**
+ *
+ */
+public interface FixCustomTags {
+    int FUT_SETT_DATE = 5226;
+    int FUT_SETT_DATE2 = 5227;
+    int TENOR_VALUE = 6215;
+    int TENOR_VALUE2 = 6216;
+    int BID_FORWARD_POINTS = 5228;
+    int OFFER_FORWARD_POINTS = 5229;
+    int BID_FORWARD_POINTS2 = 5230;
+    int OFFER_FORWARD_POINTS2 = 5231;
+    int ORIG_BID_PX = 6145;
+    int ORIG_OFFER_PX = 6147;
+    int CURRENCY = 5232;
+    int ORDER_QTY = 5233;
+    int ORDER_QTY2 = 5234;
+    int QUOTED_QUANTITY = 6054;
+    int QUOTED_QUANTITY_FAR_LEG = 6055;
+    int LEG_LAST_SPOT_RATE = 5190;
+    int LEG_LAST_FORWARD_POINTS = 5191;
+    int BID_PX2 = 6050;
+    int OFFER_PX2 = 6051;
+    int BID_SIZE2 = 6052;
+    int OFFER_SIZE2 = 6053;
+    int LAST_PX2= 6160;
+    int BID_SPOT_RATE2 = 6162;
+    int OFFER_SPOT_RATE2 = 6163;
+    int LEAVES_QTY = 6164;
+    int LEAVES_QTY2 = 6808;
+    int TICK_SIZE = 6138;
+    int BLACKOUT_START = 6230;
+    int BLACKOUT_END = 6231;
+    int ORDER_TTL = 6232;
+    int ORD_STATUS_REQ_ID = 6233;
+    int AGGREGATED_ORDER_EXEC_REF_IDS = 5557;
+    int FIXING_DATE = 6203;
+    int INCOMING_QUEUE_NANOTIME = 6300;
+
+    int INCOMING_QUEUE_LATENCY_MEASUREMENT_PK = Integer.MAX_VALUE;
+}

@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import quickfix.Message.Header;
+import quickfix.abfx.MarketDataSnaphotEncoder;
 import quickfix.field.ApplVerID;
 import quickfix.field.BeginSeqNo;
 import quickfix.field.BeginString;
@@ -1204,7 +1205,7 @@ public class Session implements Closeable {
                             generateSequenceReset(messageOutSync, begin, msgSeqNum);
                         }
                         getLog().onEvent("Resending Message: " + msgSeqNum);
-                        send(msg.toString());
+                        send(msg.toString(), msg);
                         begin = 0;
                     } else {
                         if (begin == 0) {
@@ -2300,7 +2301,7 @@ public class Session implements Closeable {
                 if (msgType.equals(MsgType.LOGON) || msgType.equals(MsgType.LOGOUT)
                         || msgType.equals(MsgType.RESEND_REQUEST)
                         || msgType.equals(MsgType.SEQUENCE_RESET) || isLoggedOn()) {
-                    result = send(messageString);
+                    result = send(messageString, message);
                 }
             } else {
                 try {
@@ -2312,7 +2313,7 @@ public class Session implements Closeable {
                 }
                 messageString = message.toString();
                 if (isLoggedOn()) {
-                    result = send(messageString);
+                    result = send(messageString, message);
                 }
             }
 
@@ -2362,8 +2363,16 @@ public class Session implements Closeable {
         return sendRaw(message, 0);
     }
 
-    private boolean send(String messageString) {
-        getLog().onOutgoing(messageString);
+    private boolean send(String messageString, Message message) {
+        try {
+            if (message.getString(MsgType.FIELD).equals(MsgType.MARKET_DATA_SNAPSHOT_FULL_REFRESH)) {
+                getLog().onOutgoing(MarketDataSnaphotEncoder.formatMarketDataMessage(message));
+            } else {
+                getLog().onOutgoing(messageString);
+            }
+        } catch (FieldNotFound fieldNotFound) {
+            getLog().onOutgoing(messageString);
+        }
         synchronized (responderSync) {
             if (!hasResponder()) {
                 getLog().onEvent("No responder, not sending message: " + messageString);
