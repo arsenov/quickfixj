@@ -701,7 +701,11 @@ public class DataDictionary {
 
     // / If we need to check for the tag in the dictionary
     private boolean shouldCheckTag(Field<?> field) {
-        return checkUserDefinedFields;
+        if (!checkUserDefinedFields && field.getField() >= USER_DEFINED_TAG_MIN) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // / Check if field tag number is defined in spec.
