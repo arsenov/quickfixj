@@ -2365,7 +2365,7 @@ public class Session implements Closeable {
 
     private boolean send(String messageString, Message message) {
         try {
-            if (message.getString(MsgType.FIELD).equals(MsgType.MARKET_DATA_SNAPSHOT_FULL_REFRESH)) {
+            if (message.getHeader().getString(MsgType.FIELD).equals(MsgType.MARKET_DATA_SNAPSHOT_FULL_REFRESH)) {
                 getLog().onOutgoing(MarketDataSnaphotEncoder.formatMarketDataMessage(message));
             } else {
                 getLog().onOutgoing(messageString);
